@@ -12,13 +12,17 @@ if not os.path.isfile(json_name):
                       indent=4,
                       separators=(',', ': '))
     x.close()
-with open(json_name) as fp:
-    listObj = json.load(fp)
+def load_file():
+    with open(json_name) as fp:
+        listObj = json.load(fp)
+    return listObj
 
 while True:
+    listObj = []
     now = datetime.now()
     clipdict = dict()
     if keyboard.is_pressed('ctrl+c'):
+        listObj = load_file()
         time.sleep(0.2)
         clipdict['text'] = pyperclip.paste()
         clipdict['time'] = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -32,6 +36,7 @@ while True:
 
     # Create a new keybind to print the Json list. ctrl+b
     elif keyboard.is_pressed('ctrl+b'):
+        listObj = load_file()
         time.sleep(0.2)
         copylist = []
         for line in listObj:
@@ -39,9 +44,11 @@ while True:
         pyperclip.copy(f"{copylist}")
         keyboard.press(('ctrl+v'))
 
-    # Create another new keyboard m for menu to choose new json.b[]
+    # Create another new keyboard m for menu to choose new json.b
     elif keyboard.is_pressed('ctrl+m'):
+        listObj = load_file()
         print('m clicked down')
         time.sleep(0.5)
+    del(listObj)
     keyboard.read_key()
 
