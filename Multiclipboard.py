@@ -43,4 +43,5 @@ while True:
     elif keyboard.is_pressed('ctrl+m'):
         print('m clicked down')
         time.sleep(0.5)
+    keyboard.read_key()
 
