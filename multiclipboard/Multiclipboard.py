@@ -1,8 +1,8 @@
 import pyperclip, keyboard
-import time, json
+import time, json, os
 from datetime import datetime
-import os
-# TODO Make object oriented, create a class to envelop the program as it is right now and make it function.
+import tkinter as tk
+# TODO Create popup window on ctrl + ä
 class multiclipboard():
     def __init__(self, json_name='clipboard.json'):
         self.listObj=[]
@@ -10,6 +10,7 @@ class multiclipboard():
         self.now = datetime.now()
         self.clipdict = dict()
     def newfile(self):
+        """Checks if the filename exists and if it does not this creates the file and sets it up for json."""
         if not os.path.isfile(self.json_name):
             x=open(self.json_name, 'x')
             x.close()
@@ -19,10 +20,33 @@ class multiclipboard():
                             separators=(',', ': '))
             x.close()
     def load_file(self):
+        """Loads the chosen file to store data in."""
         self.newfile()
         with open(self.json_name) as fp:
             self.listObj = json.load(fp)
+    
+    def popupwindow(self):
+        """Create a window with a text box and a button.
+        Gets the value from the text box on button click and changes the name of
+        self.json_name to the new name."""
+        root= tk.Tk()
+        canvas1 = tk.Canvas(root, width=400, height=300)
+        canvas1.pack()
 
+        entry1 = tk.Entry(root) 
+        canvas1.create_window(200, 140, window=entry1)
+
+        def get_filename():  
+            x1 = entry1.get()
+            
+            self.json_name = x1
+            time.sleep(0.2)
+            root.destroy()
+            
+        button1 = tk.Button(text='Enter new file name', command=get_filename)
+        canvas1.create_window(200, 180, window=button1)
+
+        root.mainloop()
     
 
 if __name__ == '__main__':
@@ -55,9 +79,9 @@ if __name__ == '__main__':
             pyperclip.copy(f"{copylist}")
             keyboard.press(('ctrl+v'))
 
-        # Create another new keyboard m for menu to choose new json.b
-        elif keyboard.is_pressed('ctrl+m'):
+        # Create another new keyboard ä menu to choose new json.b
+        elif keyboard.is_pressed('ctrl+ä'):
+            x.popupwindow()
             x.load_file()
-            print('m clicked down')
             time.sleep(0.5)
         keyboard.read_key()
