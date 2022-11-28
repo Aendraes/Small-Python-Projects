@@ -3,9 +3,9 @@ import subprocess, sys, os
 def install(package):
     try:
         import package
-    except ImportError:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    except:
+        print(f"Could not install package {package}")
 
-Installs = ["Json", "Keyboard", "pyperclip"]
+Installs = ["json", "keyboard", "pyperclip"]
 for package in Installs:
     install(package)

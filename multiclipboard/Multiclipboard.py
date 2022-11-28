@@ -9,6 +9,7 @@ class multiclipboard():
         self.json_name = json_name
         self.now = datetime.now()
         self.clipdict = dict()
+        self.index = 0
     def newfile(self):
         """Checks if the filename exists and if it does not this creates the file and sets it up for json."""
         if not os.path.isfile(self.json_name):
@@ -61,7 +62,7 @@ if __name__ == '__main__':
             x.clipdict['text'] = pyperclip.paste()
             x.clipdict['time'] = x.now.strftime("%d/%m/%Y %H:%M:%S")
             x.listObj.append(x.clipdict)
-            print(x.listObj)
+            print("ctrl+c clicked down")
             with open(x.json_name, 'w') as json_file:
                 json.dump(x.listObj, json_file,
                         indent=4,
@@ -73,7 +74,6 @@ if __name__ == '__main__':
             x.load_file()
             time.sleep(0.2)
             copylist = []
-            print(x.listObj)
             for item in x.listObj:
                 copylist.append(item.get("text"))
             pyperclip.copy(f"{copylist}")
@@ -83,5 +83,33 @@ if __name__ == '__main__':
         elif keyboard.is_pressed('ctrl+ä'):
             x.popupwindow()
             x.load_file()
+            x.index=0
             time.sleep(0.5)
+       
+        
+        # When ctrl+4 is pressed down it will append one item back in the list.
+        elif keyboard.is_pressed('ctrl+4'):
+            x.load_file()
+            time.sleep(0.2)
+            copylist = []
+            for item in x.listObj:
+                copylist.append(item.get("text"))
+            copylist = copylist[::-1]
+            if x.index < len(copylist)-1:
+                x.index+=1
+                print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",x.index)
+                pyperclip.copy(copylist[x.index])
+            keyboard.press('ctrl+v')
+        elif keyboard.is_pressed('ctrl+6'):
+            x.load_file()
+            time.sleep(0.2)
+            copylist = []
+            for item in x.listObj:
+                copylist.append(item.get("text"))
+            copylist = copylist[::-1]
+            if x.index > 0:
+                x.index = x.index -1
+                print("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",x.index)
+                pyperclip.copy(copylist[x.index])
+            keyboard.press('ctrl+v')
         keyboard.read_key()
