@@ -2,7 +2,7 @@
 A simple program that adds functionality to the copy-paste system.
 
 'ctrl+c' Gets the added function of copying every entry into a json file.  
-'ctrl+b' Pastes all entries from file into  
+'ctrl+b' Pastes all entries from file into a list in the format [1,2,3]
 'ctrl+ä' Opens a window with a text box, by clicking the button you create a new empty file with json-format. Format:"myfile.json"  
 'ctrl+4' Pastes one entry back in the list until the list ends.  
 'ctrl+6' pastes one entry forward in the list until the list ends.  
